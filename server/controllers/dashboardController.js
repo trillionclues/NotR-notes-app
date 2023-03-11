@@ -8,6 +8,6 @@ exports.dashboard = async (req, res) => {
   }
   res.render('dashboard/index', {
     locals,
-    layout: '../views/layouts/dashbord',
+    layout: '../views/layouts/dashboard',
   })
 }
