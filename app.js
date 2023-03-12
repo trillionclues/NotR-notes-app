@@ -16,9 +16,21 @@ const MongoStore = require('connect-mongo')
 const app = express()
 const port = 5000 || process.env.PORT
 
+app.use(
+  session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_URL,
+    }),
+    cookie: { maxAge: new Date(Date.now() + 3600000) },
+  })
+)
+
 // initialize passport
 app.use(passport.initialize())
-// app.use(passport.session())
+app.use(passport.session())
 
 // add middlewares for passing maybe forms and data through pages
 app.use(express.urlencoded({ extended: true }))
