@@ -84,10 +84,6 @@ passport.deserializeUser(async (id, done) => {
   } catch (error) {
     done(error)
   }
-
-  // User.findById(id, function (err, user) {
-  //   done(err, user)
-  // })
 })
 
 // export router

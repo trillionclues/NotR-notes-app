@@ -1,1 +1,110 @@
-<h1>Dashboard</h1>
+<div class="container-fluid container-fluid-custom pb-5 mb-5">
+  <div class="row mb-4">
+    <div class="col">
+      <h1 class="text-center">Hey, <%= userName %></h1>
+    </div>
+    <div class="col text-center">
+      <a href="/dashboard/create-note" type="button" class="btn btn-primary">
+        <svg
+          class="bi bi-plus-lg"
+          width="1em"
+          height="1em"
+          viewBox="0 0 16 16"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
+          />
+        </svg>
+        Create Note
+      </a>
+    </div>
+  </div>
+
+  <!-- search form -->
+  <% if(notes.length > 0) { %>
+
+  <form
+    action="/dashboard/search"
+    class="col-12 col-md-6 offset-md-3 mt-4 mb-5"
+    role="search"
+    method="POST"
+  >
+    <div class="input-group">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search notes..."
+        name="searchTerm"
+        aria-label="search"
+      />
+    </div>
+  </form>
+  <% } %>
+
+  <!-- Display Notes -->
+  <div class="notes-data row justify-content-center align-items-center">
+    <!-- if notes found/created... -->
+    <% if(notes.length > 0) { for(let i = 0; i < notes.length; i++){ %>
+
+    <div class="col-sm-3 mb-4">
+      <div class="card border-primary" style="min-height: 210px">
+        <a
+          href="/dashboard/item/<%= notes[i]._id%>"
+          class="card-body text-decoration-none text-dark"
+        >
+          <h5 class="card-title text-truncate text-center fw-bold text-primary">
+            <%= notes[i].title %>
+          </h5>
+          <p class="card-text"><%= notes[i].body %></p>
+        </a>
+      </div>
+    </div>
+
+    <!-- if no notes found/created yet... -->
+    <% } } else { %>
+    <div class="row mt-4">
+      <div class="col">
+        <h3 class="text-center">No notes yet...</h3>
+        <p class="text-center">Click the button above to create one!</p>
+      </div>
+    </div>
+
+    <% } %>
+  </div>
+
+  <!-- Pagination -->
+  <% if(notes.length > 0) { %>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center mt-5">
+      <% if(current == 1) { %>
+      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+      <% } else { %>
+      <li class="page-item">
+        <a class="page-link" href="/dashboard">First</a>
+      </li>
+      <% } %> <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %> <%
+      if (i !== 1 ) { %>
+      <li class="page-item"><a class="page-link" href="#">...</a></li>
+      <% } %> <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %> <%
+      if(i == current ) { %>
+      <li class="page-item"><a class="page-link" href="#"><%= i %></a></li>
+      <% } else { %>
+      <li class="page-item">
+        <a class="page-link" href="/dashboard/?page=<%= i %>"><%= i %></a>
+      </li>
+      <% } %> <% if(i == Number(current) + 4 && i < pages) { %>
+      <li class="page-item"><a class="page-link" href="#">...</a></li>
+      <% } %> <% } %> <% if (current == pages) { %>
+      <li class="page-item disabled"><a class="page-link">Last</a></li>
+      <% } else { %>
+      <li class="page-item">
+        <a href="/dashboard/?page=<%= pages %>" class="page-link">Last</a>
+      </li>
+      <% } %>
+    </ul>
+  </nav>
+  <% } %>
+</div>

@@ -24,6 +24,7 @@ app.use(
     store: MongoStore.create({
       mongoUrl: process.env.MONGODB_URL,
     }),
+    // add session storage limit for created accounts
     cookie: { maxAge: new Date(Date.now() + 3600000) },
   })
 )
@@ -52,11 +53,17 @@ app.set('view engine', 'ejs')
 app.use('/', require('./server/routes/auth'))
 app.use('/', require('./server/routes/index'))
 app.use('/', require('./server/routes/dashboard'))
+app.use('/', require('./server/routes/access-denied'))
 
 // Handle 404
 app.get('*', (req, res) => {
   res.status('404').render('404')
 })
+
+// // handle acccess denied
+// app.get('/access-denied', (req, res) => {
+//   res.status('401').render('401')
+// })
 
 app.listen(port, () => {
   console.log(`App is running on port ${port}`)
