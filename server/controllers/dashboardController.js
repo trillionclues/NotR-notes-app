@@ -35,7 +35,7 @@ exports.dashboard = async (req, res) => {
   try {
     // notes data sort and aggregate
     const notes = await Note.aggregate([
-      { $sort: { createdAt: -1 } },
+      { $sort: { updatedAt: -1 } },
       { $match: { user: new mongoose.Types.ObjectId(req.user.id) } },
       {
         $project: {
@@ -68,6 +68,110 @@ exports.dashboard = async (req, res) => {
       layout: '../views/layouts/dashboard',
       current: page,
       pages: Math.ceil(count / notesPerPage),
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// GET SPECIFIC NOTES
+
+exports.dashboardViewNote = async (req, res) => {
+  const note = await Note.findById({ _id: req.params.id })
+    .where({ user: req.user.id })
+    .lean()
+
+  // check if we are getting the note
+  if (note) {
+    res.render('dashboard/view-note', {
+      noteId: req.params.id,
+      note,
+      layout: '../views/layouts/dashboard',
+    })
+  } else {
+    res.send('Something went wrong...')
+  }
+}
+
+// PUT ? UPDATE SPECIFIC NOTES
+exports.dashboardUpdateNote = async (req, res) => {
+  try {
+    await Note.findOneAndUpdate(
+      { _id: req.params.id },
+      { title: req.body.title, body: req.body.body, updatedAt: Date.now() }
+    ).where({ user: req.user.id })
+    res.redirect('/dashboard')
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// DELETE SPECIFIC NOTES
+exports.dashboardDeleteNote = async (req, res) => {
+  // console.log(req.params.id)
+  try {
+    const deletedNote = await Note.deleteOne({
+      _id: req.params.id,
+      user: req.user.id,
+    })
+    if (deletedNote.deletedCount === 0) {
+      // If no notes were deleted, the ID was invalid or the note doesn't belong to the user
+      res.status(404).send('Note not found')
+    } else {
+      res.redirect('/dashboard')
+    }
+  } catch (error) {
+    console.log(error)
+    res.status(500).send('Error deleting note')
+  }
+}
+
+// GET CREATE NOTE
+exports.dashboardCreateNote = async (req, res) => {
+  res.render('dashboard/create-note', {
+    layout: '../views/layouts/dashboard',
+  })
+}
+
+// POST CREATE NOTE
+exports.dashboardCreateNotePost = async (req, res) => {
+  try {
+    req.body.user = req.user.id
+    await Note.create(req.body)
+    res.redirect('/dashboard')
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// GET SEARCH NOTE
+exports.dashboardSearchNote = async (req, res) => {
+  try {
+    res.render('dashboard/search-note', {
+      searchResult: '',
+      layout: '../views/layouts/dashboard',
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// POST SEARCH NOTE
+exports.dashboardSearchSubmit = async (req, res) => {
+  try {
+    let searchTerm = req.body.searchTerm
+    const searchNoSpecialChars = searchTerm.replace(/[^a-zA-Z0-9 ]/g, '')
+
+    const searchResult = await Note.find({
+      $or: [
+        { title: { $regex: searchNoSpecialChars, $options: 'i' } },
+        { body: { $regex: searchNoSpecialChars, $options: 'i' } },
+      ],
+    }).where({ user: req.user.id })
+
+    res.render('dashboard/search-note', {
+      searchResult,
+      layout: '../views/layouts/dashboard',
     })
   } catch (error) {
     console.log(error)

@@ -2,8 +2,8 @@
 require('dotenv').config()
 
 const express = require('express')
-
 const expressLayouts = require('express-ejs-layouts')
+const methodOverride = require('method-override')
 const connectDB = require('./server/config/db')
 
 // store login session
@@ -37,6 +37,8 @@ app.use(passport.session())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
+app.use(methodOverride(' _method '))
+
 // connect to database
 connectDB()
 
@@ -57,7 +59,7 @@ app.use('/', require('./server/routes/access-denied'))
 
 // Handle 404
 app.get('*', (req, res) => {
-  res.status('404').render('404')
+  res.status(404).render('404')
 })
 
 // // handle acccess denied
