@@ -4,6 +4,18 @@
   --bs-primary-rgb: #12296c;
 }
 
+* {
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 0.3rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--bs-primary-rgb);
+}
+
 body {
   font-family: 'Space Grotesk', sans-serif;
   background-color: var(--background-color);
@@ -24,7 +36,23 @@ h6 {
 }
 
 .container-fluid-custom {
-  max-width: 1600px;
+  /* max-width: 1600px; */
+}
+
+/* header */
+.home-btn {
+  position: relative;
+}
+
+.button-stroke {
+  display: block;
+  width: calc(50% - 30px);
+  height: 20px;
+  stroke: var(--bs-primary-rgb);
+  position: absolute;
+  left: -10px;
+  bottom: -10px;
+  stroke-width: 3;
 }
 
 /* Button */
@@ -76,11 +104,28 @@ h6 {
 }
 
 /* Home */
-@media (min-width: 1200px) {
+/* @media (min-width: 1200px) {
   .home {
     background: url('../img/human-1.svg') left bottom no-repeat,
       url('../img/human-2.svg') right bottom no-repeat,
       url('../img/noise-bg.png') left top repeat, var(--background-color);
+  }
+} */
+
+@media (max-width: 500px) {
+  main {
+    padding: 2rem 0 0 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .home-btn {
+    margin: 0 0 1rem 0;
+  }
+
+  .button-stroke {
+    width: calc(100% - 30px);
+    left: 40px;
   }
 }
 
