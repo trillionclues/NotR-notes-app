@@ -2,9 +2,9 @@
 exports.homepage = async (req, res) => {
   // define locals data
   const locals = {
-    title: 'Notefy | Home',
+    title: 'NotR | Home',
     description:
-      'Notefy is a simple note taking app that helps you to take notes and save them for later use.',
+      'NotR is a simple note taking app that helps you to take notes and save them for later use.',
   }
   res.render('index', {
     locals,
@@ -16,9 +16,20 @@ exports.homepage = async (req, res) => {
 exports.about = async (req, res) => {
   // define locals data
   const locals = {
-    title: 'Notefy | About',
+    title: 'NotR | About',
     description:
-      'Notefy is a simple note taking app that helps you to take notes and save them for later use.',
+      'NotR is a simple note taking app that helps you to take notes and save them for later use.',
   }
   res.render('about', locals)
+}
+
+// GET FEATURES
+exports.features = async (req, res) => {
+  // define locals data
+  const locals = {
+    title: 'NotR | Features',
+    description:
+      'NotR is a simple note taking app that helps you to take notes and save them for later use.',
+  }
+  res.render('features', locals)
 }

@@ -1,8 +1,16 @@
-<div class="container-fluid container-fluid-custom pb-5 mb-5">
+<div
+  class="container-fluid container-fluid-custom pb-5 mb-5 container container-custom"
+>
   <div class="row mb-4">
     <div class="col">
-      <nav class="breadcrumb">
-        <ol class="breadcrumb">
+      <nav
+        aria-label="breadcrumb"
+        class="d-flex justify-content-between align-items-center"
+      >
+        <ol
+          class="breadcrumb bg-transparent mb-0 pb-0 pt-0 ps-0 fs-6"
+          style="font-weight: 500"
+        >
           <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
           <li class="breadcrumb-item active" aria-current="page">
             Create new note
@@ -10,21 +18,23 @@
         </ol>
       </nav>
 
-      <div class="col d-flex justify-content-between align-items-center">
-        <h1 class="h3">Add Note</h1>
+      <div class="d-flex justify-content-center align-items-center mb-2">
+        <h1
+          class="fs-2 fw-bold text-center text-primary"
+          style="font-size: 2.5rem; font-weight: 700; margin-top: 1rem"
+        >
+          Create a quick note...
+        </h1>
       </div>
     </div>
   </div>
 
   <!-- form -->
   <form action="/dashboard/create-note" method="POST" class="position-relative">
-    <div
-      class="form-group mb-4 position-absolute"
-      style="left: 1px; top: 1px; right: 1px"
-    >
+    <div class="form-group mb-4" style="left: 1px; top: 1px; right: 1px">
       <input
         type="text"
-        class="form-control fw-bold border-0 fs-4 text-center text-primary"
+        class="form-control fw-bold border-0 fs-4 text-primary"
         id="title"
         name="title"
         placeholder="Title"
@@ -34,19 +44,20 @@
 
     <div class="form-group mb-4">
       <textarea
-        class="form-control pt-5 fs-4"
+        class="form-control border-0 fs-5 text-primary"
         id="body"
         name="body"
         placeholder="Take a note..."
-        rows="12"
+        rows="10"
         required
       >
-      Take a note
       </textarea>
     </div>
 
-    <div class="form-group">
-      <button type="submit" class="btn btn-primary btn-lg">Save Note</button>
+    <div class="form-group d-flex justify-content-end align-items-center mb-2">
+      <button type="submit" class="btn btn-primary btn-lg fw-bold">
+        Save Note
+      </button>
     </div>
   </form>
 </div>

@@ -1,4 +1,6 @@
-<div class="container-fluid container-fluid-custom pb-5 mb-5">
+<div
+  class="container-fluid container-fluid-custom pb-5 mb-5 container container-custom"
+>
   <div class="row mb-4">
     <div class="col">
       <nav class="breadcrumb">
@@ -11,16 +13,21 @@
       </nav>
 
       <div class="col d-flex justify-content-between align-items-center">
-        <h1 class="h3">View Note</h1>
+        <h1
+          class="fs-2 fw-bold text-center text-primary"
+          style="font-size: 2.5rem; font-weight: 700; margin-top: 1rem"
+        >
+          <%= note.title %>
+        </h1>
 
         <button
           type="button"
-          class="btn btn-danger me-2"
+          class="btn btn-danger btn-lg"
           data-bs-toggle="modal"
           id="deleteButton"
           data-bs-target="#deleteModal"
         >
-          Delete
+          Trash this note...
         </button>
       </div>
     </div>
@@ -32,10 +39,7 @@
     method="POST"
     class="position-relative"
   >
-    <div
-      class="form-group mb-4 position-absolute"
-      style="left: 1px; top: 1px; right: 1px"
-    >
+    <div class="form-group mb-4" style="left: 1px; top: 1px; right: 1px">
       <input
         type="text"
         class="form-control fw-bold border-0 fs-4 text-center text-primary"
@@ -48,20 +52,20 @@
 
     <div class="form-group mb-4">
       <textarea
-        class="form-control pt-5 fs-4"
+        class="form-control border-0 fs-5 text-primary"
         id="body"
         name="body"
         placeholder="Take a note..."
-        rows="12"
+        rows="10"
       >
 <%= note.body %></textarea
       >
     </div>
 
     <div class="form-group">
-      <button type="submit" class="btn btn-primary btn-lg">
+      <button type="submit" class="btn btn-primary btn-lg fw-bold">
         <i class="fas fa-save me-2"></i>
-        Update Note!
+        Update Note
       </button>
     </div>
   </form>
