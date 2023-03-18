@@ -1,6 +1,7 @@
 // Able to CRUD using Notes Model
 const Note = require('../models/Notes')
 const mongoose = require('mongoose')
+const axios = require('axios')
 
 // GET DASHBOARD
 exports.dashboard = async (req, res) => {
@@ -107,19 +108,30 @@ exports.dashboardUpdateNote = async (req, res) => {
 }
 
 // DELETE SPECIFIC NOTES
+// exports.dashboardDeleteNote = async (req, res) => {
+//   console.log(req.params.id)
+//   try {
+//     await Note.deleteOne({
+//       _id: req.params.id,
+//       user: req.user.id,
+//     }).where({ user: req.user.id })
+//     if (deletedNote.deletedCount === 0) {
+//       // If no notes were deleted, the ID was invalid or the note doesn't belong to the user
+//       res.status(404).send('Note not found')
+//     } else {
+//       res.redirect('/dashboard')
+//     }
+//   } catch (error) {
+//     console.log(error)
+//     res.status(500).send('Error deleting note')
+//   }
+// }
 exports.dashboardDeleteNote = async (req, res) => {
-  // console.log(req.params.id)
   try {
-    const deletedNote = await Note.deleteOne({
-      _id: req.params.id,
+    await Note.deleteOne({ _id: req.params.id, user: req.user.id }).where({
       user: req.user.id,
     })
-    if (deletedNote.deletedCount === 0) {
-      // If no notes were deleted, the ID was invalid or the note doesn't belong to the user
-      res.status(404).send('Note not found')
-    } else {
-      res.redirect('/dashboard')
-    }
+    res.sendStatus(204)
   } catch (error) {
     console.log(error)
     res.status(500).send('Error deleting note')

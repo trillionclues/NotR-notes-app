@@ -6,6 +6,9 @@ const expressLayouts = require('express-ejs-layouts')
 const methodOverride = require('method-override')
 const connectDB = require('./server/config/db')
 
+// AXIOS
+const apiRouter = require('./server/AXIOS/api')
+
 // store login session
 const session = require('express-session')
 
@@ -55,6 +58,9 @@ app.use('/', require('./server/routes/auth'))
 app.use('/', require('./server/routes/index'))
 app.use('/', require('./server/routes/dashboard'))
 app.use('/', require('./server/routes/access-denied'))
+
+// AXIOS
+app.use('/api', apiRouter)
 
 // Handle 404
 app.get('*', (req, res) => {

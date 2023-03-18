@@ -40,5 +40,25 @@
       integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+      const deleteButton = document.getElementById(`delete-button-${noteId}`)
+
+      deleteButton.addEventListener('click', async (event) => {
+        event.preventDefault()
+        const result = confirm('Are you sure you want to delete this note?')
+        if (result) {
+          try {
+            await axios.delete(`/dashboard/item/${noteId}`)
+            const noteDel = document.querySelector(`#note-${noteId}`)
+            noteDel.remove()
+          } catch (error) {
+            console.log(error)
+            alert('Error deleting note!')
+          }
+        }
+      })
+    </script>
   </body>
 </html>
